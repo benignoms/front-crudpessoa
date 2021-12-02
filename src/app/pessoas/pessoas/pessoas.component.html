@@ -1,0 +1,104 @@
+<mat-card class="example-card">
+  <mat-card-title>Nova Pessoa</mat-card-title>
+  <form #formPessoa="ngForm" name="formPessoa" (ngSubmit)="onSubmit(formPessoa)">
+    <mat-form-field>
+      <input matInput required="true" placeholder="Nome" [(ngModel)]="pessoa.nome" name="nome">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput required="true" placeholder="CPF" name="cpf" [(ngModel)]="pessoa.cpf">
+    </mat-form-field>
+    <div>
+      <label>Sexo: </label>
+      <mat-radio-group aria-label="Sexo" [(ngModel)]="pessoa.sexo" name="sexo" placeholder="Sexo">
+        <mat-radio-button value="M" checked="true">Masculino</mat-radio-button>
+        <mat-radio-button value="F">Feminino</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <mat-form-field>
+      <input type="number" required="true" matInput placeholder="Altura" name="altura" [(ngModel)]="pessoa.altura">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="number" required="true" matInput placeholder="Peso" name="peso" [(ngModel)]="pessoa.peso">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="date" matInput placeholder="Data de Nascimento" name="dataNascimento"
+        [(ngModel)]="pessoa.dataNascimento ">
+    </mat-form-field>
+    <mat-card-footer>
+      <button mat-flat-button color="primary" [disabled]="pessoa.id == null" (click)="newPessoa()">
+        Noa Pessoa
+      </button>
+      <button mat-flat-button color="primary" [disabled]="pessoa.id != null" (click)="createPessoa()">
+        Incluir
+      </button>
+      <button mat-flat-button color="primary" [disabled]="pessoa.id == null" (click)="editPessoa(pessoa)">
+        Alterar
+      </button>
+      <button mat-flat-button color="warn" [disabled]="pessoa.id == null" (click)="removePessoa(pessoa)">
+        Excluir
+      </button>
+      <button mat-flat-button color="accent" [disabled]="pessoa.id == null" (click)="calcularPesoIdeal(pessoa)">
+        Calcular Peso Ideal
+      </button>
+    </mat-card-footer>
+  </form>
+</mat-card>
+<mat-card>
+  <form name="formularioBusca">
+    <mat-grid-list cols="2" rowHeight="2:1">
+      <mat-form-field>
+        <input matInput type="search" [(ngModel)]="buscaNome" name="buscaNome"
+          placeholder="Digite um nome para busca" />
+      </mat-form-field>
+      <button mat-flat-button color="primary" (click)="findByNome(buscaNome)">
+        Pesquisar
+      </button>
+    </mat-grid-list>
+  </form>
+</mat-card>
+<mat-card>
+  <mat-toolbar color="primary">Pessoas Cadastradas</mat-toolbar>
+  <div *ngIf="pessoas$ | async as pessoas; else loading ">
+    <table mat-table [dataSource]="pessoas" class="mat-elevation-z8">
+
+      <!-- Coluna Nome -->
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef> Nome </th>
+        <td mat-cell *matCellDef="let pessoa"> {{ pessoa.nome }} </td>
+      </ng-container>
+
+      <!-- Coluna CPF -->
+      <ng-container matColumnDef="cpf">
+        <th mat-header-cell *matHeaderCellDef> CPF </th>
+        <td mat-cell *matCellDef="let pessoa"> {{ pessoa.cpf }} </td>
+      </ng-container>
+
+      <!-- Coluna Altura -->
+      <ng-container matColumnDef="altura">
+        <th mat-header-cell *matHeaderCellDef> Altura(m) </th>
+        <td mat-cell *matCellDef="let pessoa"> {{pessoa.altura}} </td>
+      </ng-container>
+
+      <!-- Coluna Peso -->
+      <ng-container matColumnDef="peso">
+        <th mat-header-cell *matHeaderCellDef> Peso(kg) </th>
+        <td mat-cell *matCellDef="let pessoa"> {{pessoa.peso}} </td>
+      </ng-container>
+
+      <!-- Coluna Sexo -->
+      <ng-container matColumnDef="sexo">
+        <th mat-header-cell *matHeaderCellDef> Sexo </th>
+        <td mat-cell *matCellDef="let pessoa"> {{pessoa.sexo}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row (click)="findById(pessoa.id)" *matRowDef="let pessoa; columns: displayedColumns;"></tr>
+
+    </table>
+  </div>
+  <ng-template #loading>
+    <div class="loading-spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+</mat-card>

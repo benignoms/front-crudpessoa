@@ -1,0 +1,5 @@
+[
+  {"id":1,"nome":"Benigno Sales","cpf":"85421600378","dataNascimento":"1981-12-12","altura":1.8,"peso":84.0,"sexo":"M"},
+  {"id":2,"nome":"Wyllames Carlos","cpf":"53996548060","dataNascimento":"1982-03-13","altura":1.9,"peso":130.0,"sexo":"M"},
+  {"id":13,"nome":"James Gosling","cpf":"10111225027","dataNascimento":"1955-05-19","altura":1.84,"peso":100.0,"sexo":"M"}
+]
